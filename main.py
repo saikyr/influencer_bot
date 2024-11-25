@@ -99,13 +99,17 @@ def analyze_post_with_openai(post):
 if __name__ == "__main__":
     subreddit_name = PROMPT_CONFIG["subreddit"]
     num_comments_to_fetch = 5  # Number of comments per post to include
-    time_range_hours = 6  # Fetch posts from the last 6 hours
-    wait_time = 3600  # Wait time set to 1 hour
+    num_replies_to_fetch = 3  # Number of replies to comments to recursively fetch
+    depth_limit = 3  # Depth limit of comment threads
+    time_range_hours = 6  # Time frame of posts to consider
+    wait_time = 3600  # Interval between cycles in seconds
 
     while True:
         # Fetch the next top post that hasn't been analyzed
         post = fetch_next_top_post(subreddit_name=subreddit_name,
                                    num_comments_to_fetch=num_comments_to_fetch,
+                                   num_replies_to_fetch=num_replies_to_fetch,
+                                   depth_limit=depth_limit,
                                    time_range_hours=time_range_hours)
 
         if post:
